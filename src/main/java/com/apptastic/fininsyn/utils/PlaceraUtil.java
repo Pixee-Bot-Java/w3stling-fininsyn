@@ -1,6 +1,7 @@
 package com.apptastic.fininsyn.utils;
 
 import com.apptastic.fininsyn.InstrumentLookup;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class PlaceraUtil {
             String line;
             List<String> tickerNames = new ArrayList<>();
 
-            while ((line = reader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
 
                 if (line.contains("ellipsis")) {
                     String tickerName = getTickerName(line);

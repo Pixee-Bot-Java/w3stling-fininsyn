@@ -4,6 +4,7 @@ import com.apptastic.fininsyn.InstrumentLookup;
 import com.apptastic.insynsregistret.FreeTextQuery;
 import com.apptastic.insynsregistret.FreeTextQueryBuilder;
 import com.apptastic.insynsregistret.Insynsregistret;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class RealtidUtil {
         try(BufferedReader reader = downloadPage(url, "UTF-8")) {
             String line;
 
-            while ((line = reader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 if (line.contains("field field-name-field-tags"))
                     symbols = getTickerName(line);
             }
