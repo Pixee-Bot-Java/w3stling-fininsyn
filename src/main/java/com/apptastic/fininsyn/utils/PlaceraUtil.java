@@ -1,6 +1,8 @@
 package com.apptastic.fininsyn.utils;
 
 import com.apptastic.fininsyn.InstrumentLookup;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -69,7 +71,7 @@ public class PlaceraUtil {
 
 
     private static BufferedReader downloadPage(String url, String characterEncoding) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+        HttpURLConnection connection = (HttpURLConnection) Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).openConnection();
 
         connection.setRequestProperty("Accept-Encoding", "gzip, deflate");
         connection.setRequestProperty("User-Agent", HTTP_USER_AGENT);
