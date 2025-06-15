@@ -1,5 +1,6 @@
 package com.apptastic.fininsyn.bitly;
 
+import io.github.pixee.security.BoundedLineReader;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -65,7 +66,7 @@ public class BitlyClient {
                     BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     StringBuilder sb = new StringBuilder();
                     String line;
-                    while ((line = br.readLine()) != null) {
+                    while ((line = BoundedLineReader.readLine(br, 5_000_000)) != null) {
                         sb.append(line+"\n");
                     }
                     br.close();
